@@ -26,7 +26,7 @@ public class BallDemo
     /**
      * Simulate two bouncing balls
      */
-    public void bounce(int bola)
+    public void bounce1(int bola)
     {
         int ground = 400;   // position of the ground line
 
@@ -34,6 +34,10 @@ public class BallDemo
 
         // draw the ground
         myCanvas.drawLine(50, ground, 550, ground);
+        
+        
+        
+        
 
         // caja y mostrar las bolas
         for(int i=0; i<bola; i++){
@@ -62,8 +66,51 @@ public class BallDemo
             // stop once ball has travelled a certain distance on x axis
                 if(cadaBola.getXPosition() >= 550) {
                 finished = true;
+                break;
                 }
             }
         }
     }
-}
+    public void boxBounce(int bola){
+        myCanvas.fillRectangle(100, 300, 200, 100);
+             int ground = 400;   // position of the ground line
+
+        myCanvas.setVisible(true);
+
+        // draw the ground
+        myCanvas.drawLine(50, ground, 550, ground);         
+        
+        
+
+        // caja y mostrar las bolas
+        for(int i=0; i<bola; i++){
+
+            Random aleatorio = new Random ();
+            int x = aleatorio.nextInt(300);
+            int y = aleatorio.nextInt(250);
+            int diametro = aleatorio.nextInt(50);
+            int colorRojo = aleatorio.nextInt(256);
+            int colorVerde = aleatorio.nextInt(256);
+            int colorAzul = aleatorio.nextInt(256);
+            
+
+            BouncingBall ball = new BouncingBall(x, y, diametro, new Color(colorRojo, colorVerde, colorAzul), ground, myCanvas);
+            ball.draw();
+            bolas.add(ball);
+        }
+
+        // make them bounce
+        boolean finished =  false;
+        while(!finished) {
+            myCanvas.wait(50);      // small delay
+            for(BouncingBall cadaBola:bolas){
+            cadaBola.move();
+            
+            // stop once ball has travelled a certain distance on x axis
+                if(cadaBola.getXPosition() >= 550) {
+                finished = true;
+                break;
+                }
+            }
+    }
+}}
