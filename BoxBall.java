@@ -8,18 +8,21 @@ import java.awt.geom.*;
  */
 public class BoxBall
 {
-    
-    private static final int GRAVITY = 1;  // effect of gravity Modifique 3 a 1
-
     private int ballDegradation = 2;
     private Ellipse2D.Double circle;
     private Color color;
     private int diameter;
     private int xPosition;
     private int yPosition;
-    private final int groundPosition;      // y position of ground
     private Canvas canvas;
-    private int ySpeed = 1;                // initial downward speed
+    private int ySpeed; // initial downward speed
+    private int xSpeed;
+    
+    //Dimensiones rectangulo
+    private int techoDelRectangulo;
+    private int sueloDelRectangulo;
+    private int paredIzquierdaRectangulo;
+    private int paredDerechaRectangulo;
 
     /**
      * Constructor for objects of class BouncingBall
@@ -31,15 +34,21 @@ public class BoxBall
      * @param groundPos  the position of the ground (where the wall will bounce)
      * @param drawingCanvas  the canvas to draw this ball on
      */
-    public BoxBall(int xPos, int yPos, int ballDiameter, Color ballColor,
-                        int groundPos, Canvas drawingCanvas)
+    public BoxBall(int xPos, int yPos, int ballDiameter, Color ballColor, int ySpeed, int xSpeed,
+                        int paredIzq, int techoRect, int paredDer, int sueloRect, Canvas drawingCanvas)
     {
         xPosition = xPos;
         yPosition = yPos;
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
         color = ballColor;
-        diameter = ballDiameter;
-        groundPosition = groundPos;
-        canvas = drawingCanvas;
+        diameter = ballDiameter;        
+        canvas = drawingCanvas;        
+        techoDelRectangulo = techoRect;
+        sueloDelRectangulo = sueloRect;
+        paredIzquierdaRectangulo = paredIzq;
+        paredDerechaRectangulo = paredDer;
+        
     }
 
     /**
@@ -65,22 +74,17 @@ public class BoxBall
     public void move()
     {
         // remove from canvas at the current position
-        erase();
-            
-        // compute new position
-        ySpeed += GRAVITY;
+        erase();            
+        // compute new position        
         yPosition += ySpeed;
-        xPosition +=1; // modifique 2 a 1
-
+        xPosition += xSpeed; //
         // check if it has hit the ground
-        if(yPosition >= (groundPosition - diameter) && ySpeed > 0) {
-            yPosition = (int)(groundPosition - diameter);
-            ySpeed = -ySpeed + ballDegradation; 
+        if(yPosition >= (sueloDelRectangulo - diameter) || yPosition <= techoDelRectangulo) {
+            ySpeed = -ySpeed; 
         }//
         
-         if(xPosition >=100 && xPosition <= 300 && yPosition <=100-diameter) {
-            yPosition = (int)(100 - diameter);
-            ySpeed = -ySpeed + ballDegradation; 
+         if(xPosition >= (paredDerechaRectangulo - diameter) || xPosition <= paredIzquierdaRectangulo) {
+            xSpeed = -xSpeed; 
         }
 
         // draw again at new position

@@ -12,10 +12,7 @@ import java.util.Random;
 public class BallDemo   
 {
     private Canvas myCanvas;
-    //private ArrayList <BouncingBall> bolas = new ArrayList<>(); 
-    private ArrayList <BoxBall> bolas = new ArrayList<>(); 
-
-    /**
+     /**
      * Create a BallDemo object. Creates a fresh canvas and makes it visible.
      */
     public BallDemo()
@@ -27,18 +24,15 @@ public class BallDemo
     /**
      * Simulate two bouncing balls
      */
-  
-   
-   public void boxBounce(int bola){
-        myCanvas.fillRectangle(100, 300, 200, 100);
-             int ground = 400;   // position of the ground line
+    public void bounce1(int bola)
+    {
+        int ground = 400;   // position of the ground line
 
         myCanvas.setVisible(true);
 
         // draw the ground
-        myCanvas.drawLine(50, ground, 550, ground);         
-        
-        
+        myCanvas.drawLine(50, ground, 550, ground);
+        ArrayList <BouncingBall> bolas = new ArrayList<>(); 
 
         // caja y mostrar las bolas
         for(int i=0; i<bola; i++){
@@ -50,10 +44,8 @@ public class BallDemo
             int colorRojo = aleatorio.nextInt(256);
             int colorVerde = aleatorio.nextInt(256);
             int colorAzul = aleatorio.nextInt(256);
-            
 
-           // BouncingBall ball = new BouncingBall(x, y, diametro, new Color(colorRojo, colorVerde, colorAzul), ground, myCanvas);
-            BoxBall ball = new BoxBall(x, y, diametro, new Color(colorRojo, colorVerde, colorAzul), ground, myCanvas);
+            BouncingBall ball = new BouncingBall(x, y, diametro, new Color(colorRojo, colorVerde, colorAzul), ground, myCanvas);
             ball.draw();
             bolas.add(ball);
         }
@@ -62,14 +54,60 @@ public class BallDemo
         boolean finished =  false;
         while(!finished) {
             myCanvas.wait(50);      // small delay
-            for(BoxBall cadaBola:bolas){
-            cadaBola.move();
-            
-            // stop once ball has travelled a certain distance on x axis
+            for(BouncingBall cadaBola:bolas){
+                cadaBola.move();
+
+                // stop once ball has travelled a certain distance on x axis
                 if(cadaBola.getXPosition() >= 550) {
-                finished = true;
-                break;
+                    finished = true;
+                    break;
                 }
             }
+        }
     }
-}}
+
+    public void boxBounce(int bola){
+        ArrayList <BoxBall> bolas = new ArrayList<>();      
+        
+        int techoDelRectangulo = 100;
+        int sueloDelRectangulo = 300;
+        int paredIzquierdaRectangulo = 100;
+        int paredDerechaRectangulo = 400;
+        
+        myCanvas.fillRectangle(paredIzquierdaRectangulo, techoDelRectangulo, paredDerechaRectangulo, sueloDelRectangulo);
+        myCanvas.setVisible(true);       
+                     
+
+        // caja y mostrar las bolas
+        for(int i=0; i<bola; i++){
+
+            Random aleatorio = new Random ();
+//             int x = aleatorio.nextInt(300)+100;
+//             int y = aleatorio.nextInt(200) +100;
+//             int diametro = aleatorio.nextInt(50);
+            int x = 100;
+            int y = 100;
+            int diametro = 45;
+            int colorRojo = aleatorio.nextInt(256);
+            int colorVerde = aleatorio.nextInt(256);
+            int colorAzul = aleatorio.nextInt(256);
+            int ySpeed = 1;
+            int xSpeed = 1;
+
+            // BouncingBall ball = new BouncingBall(x, y, diametro, new Color(colorRojo, colorVerde, colorAzul), ground, myCanvas);
+            BoxBall ball = new BoxBall(x, y, diametro, new Color(colorRojo, colorVerde, colorAzul), ySpeed, xSpeed,
+                    paredIzquierdaRectangulo,techoDelRectangulo, paredDerechaRectangulo, sueloDelRectangulo, myCanvas);
+            ball.draw();
+            bolas.add(ball);
+        }
+
+        // make them bounce
+        boolean finished =  false;
+        while(!finished) {
+            myCanvas.wait(10);  // Cambiado el parametro de 50 a 10 para que vaya mas rapido
+            for(BoxBall cadaBola:bolas){
+                cadaBola.move();
+            }
+        }
+    }
+}
