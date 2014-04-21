@@ -34,7 +34,7 @@ public class BoxBall
      * @param groundPos  the position of the ground (where the wall will bounce)
      * @param drawingCanvas  the canvas to draw this ball on
      */
-    public BoxBall(int xPos, int yPos, int ballDiameter, Color ballColor, int ySpeed, int xSpeed,
+    public BoxBall(int xPos, int yPos, int ballDiameter, Color ballColor,  int xSpeed, int ySpeed,
                         int paredIzq, int techoRect, int paredDer, int sueloRect, Canvas drawingCanvas)
     {
         xPosition = xPos;
@@ -83,12 +83,12 @@ public class BoxBall
             ySpeed = -ySpeed; 
         }//
         
-         if(xPosition >= (paredDerechaRectangulo - diameter) || xPosition <= paredIzquierdaRectangulo) {
+        if(xPosition >= (paredDerechaRectangulo - diameter) || xPosition <= paredIzquierdaRectangulo) {
             xSpeed = -xSpeed; 
         }
-
         // draw again at new position
         draw();
+        
     }    
 
     /**

@@ -69,12 +69,12 @@ public class BallDemo
     public void boxBounce(int bola){
         ArrayList <BoxBall> bolas = new ArrayList<>();      
         
-        int techoDelRectangulo = 100;
-        int sueloDelRectangulo = 300;
-        int paredIzquierdaRectangulo = 100;
-        int paredDerechaRectangulo = 400;
+            int techoDelRectangulo = 100;
+            int sueloDelRectangulo = 300;
+            int paredIzquierdaRectangulo = 100;
+            int paredDerechaRectangulo = 400;
         
-        myCanvas.fillRectangle(paredIzquierdaRectangulo, techoDelRectangulo, paredDerechaRectangulo, sueloDelRectangulo);
+        myCanvas.fillRectangle(paredIzquierdaRectangulo,techoDelRectangulo,paredDerechaRectangulo - paredIzquierdaRectangulo,sueloDelRectangulo - techoDelRectangulo);
         myCanvas.setVisible(true);       
                      
 
@@ -82,21 +82,18 @@ public class BallDemo
         for(int i=0; i<bola; i++){
 
             Random aleatorio = new Random ();
-//             int x = aleatorio.nextInt(300)+100;
-//             int y = aleatorio.nextInt(200) +100;
-//             int diametro = aleatorio.nextInt(50);
-            int x = 100;
-            int y = 100;
-            int diametro = 45;
+            int x = aleatorio.nextInt(300)+100;
+            int y = aleatorio.nextInt(200) +100;
+            int diametro = aleatorio.nextInt(50);            
             int colorRojo = aleatorio.nextInt(256);
             int colorVerde = aleatorio.nextInt(256);
             int colorAzul = aleatorio.nextInt(256);
             int ySpeed = 1;
             int xSpeed = 1;
+           
 
             // BouncingBall ball = new BouncingBall(x, y, diametro, new Color(colorRojo, colorVerde, colorAzul), ground, myCanvas);
-            BoxBall ball = new BoxBall(x, y, diametro, new Color(colorRojo, colorVerde, colorAzul), ySpeed, xSpeed,
-                    paredIzquierdaRectangulo,techoDelRectangulo, paredDerechaRectangulo, sueloDelRectangulo, myCanvas);
+            BoxBall ball = new BoxBall(x, y, diametro, new Color(colorRojo, colorVerde, colorAzul), ySpeed, xSpeed, paredIzquierdaRectangulo, techoDelRectangulo, paredDerechaRectangulo, sueloDelRectangulo, myCanvas);
             ball.draw();
             bolas.add(ball);
         }
